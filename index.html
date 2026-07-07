@@ -11,122 +11,158 @@
   <div id="app-navbar"></div>
 
   <main class="max-w-7xl mx-auto px-4 py-6">
-    <div class="mb-6">
-      <h1 class="text-2xl font-bold">لیست شرکت‌کنندگان</h1>
-      <p class="text-sm text-slate-500 mt-1">
-        جستجو، فیلتر و مدیریت اطلاعات شرکت‌کنندگان دوره
-      </p>
-    </div>
 
-    <!-- Search & Filters -->
-    <section class="bg-white border border-slate-200 rounded-2xl p-4 md:p-5 shadow-sm mb-6">
-      <div class="flex flex-col gap-4">
+    <!-- Page Header -->
+    <section class="mb-6">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <label for="searchInput" class="block text-sm font-medium text-slate-700 mb-2">
-            جستجوی سراسری
+          <h1 class="text-2xl md:text-3xl font-bold text-slate-900">
+            شرکت‌کنندگان دوره
+          </h1>
+          <p class="text-sm text-slate-500 mt-2">
+            جستجو، بررسی و مدیریت اطلاعات شرکت‌کنندگان دوره کوچینگ تجارت
+          </p>
+        </div>
+
+        <a
+          href="index.html"
+          class="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition shadow-sm"
+        >
+          + ثبت شرکت‌کننده جدید
+        </a>
+      </div>
+    </section>
+
+    <!-- Search Main Box -->
+    <section class="bg-white border border-slate-200 rounded-3xl shadow-sm p-4 md:p-6 mb-5">
+      <div class="relative">
+        <label for="searchInput" class="block text-sm font-medium text-slate-700 mb-2">
+          جستجوی سریع
+        </label>
+
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="جستجو بر اساس نام، موبایل، شهر، شغل، پروژه واردات یا صادرات..."
+          class="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-4 text-sm outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition"
+        />
+
+        <p class="text-xs text-slate-400 mt-2">
+          مثال: تهران، صادرات خشکبار، واردات تجهیزات، نام شرکت‌کننده
+        </p>
+      </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="bg-white border border-slate-200 rounded-3xl shadow-sm p-4 md:p-6 mb-5">
+      <div class="flex items-center justify-between gap-3 mb-4">
+        <div>
+          <h2 class="font-bold text-slate-800">
+            فیلترها
+          </h2>
+          <p class="text-xs text-slate-500 mt-1">
+            برای محدود کردن نتایج از فیلترهای زیر استفاده کنید
+          </p>
+        </div>
+
+        <button
+          id="clearFiltersBtn"
+          type="button"
+          class="px-4 py-2 rounded-xl border border-slate-300 text-sm text-slate-600 hover:bg-slate-50 transition"
+        >
+          پاک کردن
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-3">
+        <div>
+          <label for="provinceFilter" class="block text-xs font-medium text-slate-600 mb-1">
+            استان
           </label>
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="جستجو در نام، ایمیل، اینستاگرام، استان، شهر، شغل و پروژه‌ها..."
-            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
-          />
+          <select id="provinceFilter" class="w-full rounded-xl border border-slate-300 px-3 py-3 text-sm bg-white outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100">
+            <option value="">همه استان‌ها</option>
+          </select>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-7 gap-3">
-          <div>
-            <label for="provinceFilter" class="block text-sm font-medium text-slate-700 mb-2">استان</label>
-            <select id="provinceFilter" class="w-full rounded-xl border border-slate-300 px-3 py-3 text-sm bg-white">
-              <option value="">همه استان‌ها</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="cityFilter" class="block text-sm font-medium text-slate-700 mb-2">شهر</label>
-            <select id="cityFilter" class="w-full rounded-xl border border-slate-300 px-3 py-3 text-sm bg-white">
-              <option value="">همه شهرها</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="importProjectFilter" class="block text-sm font-medium text-slate-700 mb-2">پروژه واردات</label>
-            <select id="importProjectFilter" class="w-full rounded-xl border border-slate-300 px-3 py-3 text-sm bg-white">
-              <option value="">همه پروژه‌های واردات</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="exportProjectFilter" class="block text-sm font-medium text-slate-700 mb-2">پروژه صادرات</label>
-            <select id="exportProjectFilter" class="w-full rounded-xl border border-slate-300 px-3 py-3 text-sm bg-white">
-              <option value="">همه پروژه‌های صادرات</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="emailFilter" class="block text-sm font-medium text-slate-700 mb-2">وضعیت ایمیل</label>
-            <select id="emailFilter" class="w-full rounded-xl border border-slate-300 px-3 py-3 text-sm bg-white">
-              <option value="">همه</option>
-              <option value="has">دارای ایمیل</option>
-              <option value="missing">بدون ایمیل</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="instagramFilter" class="block text-sm font-medium text-slate-700 mb-2">وضعیت اینستاگرام</label>
-            <select id="instagramFilter" class="w-full rounded-xl border border-slate-300 px-3 py-3 text-sm bg-white">
-              <option value="">همه</option>
-              <option value="has">دارای اینستاگرام</option>
-              <option value="missing">بدون اینستاگرام</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="sortOrder" class="block text-sm font-medium text-slate-700 mb-2">مرتب‌سازی</label>
-            <select id="sortOrder" class="w-full rounded-xl border border-slate-300 px-3 py-3 text-sm bg-white">
-              <option value="updated_desc">آخرین ویرایش</option>
-              <option value="created_desc">جدیدترین</option>
-              <option value="created_asc">قدیمی‌ترین</option>
-              <option value="name_asc">نام (الف تا ی)</option>
-              <option value="name_desc">نام (ی تا الف)</option>
-            </select>
-          </div>
+        <div>
+          <label for="cityFilter" class="block text-xs font-medium text-slate-600 mb-1">
+            شهر
+          </label>
+          <select id="cityFilter" class="w-full rounded-xl border border-slate-300 px-3 py-3 text-sm bg-white outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100">
+            <option value="">همه شهرها</option>
+          </select>
         </div>
 
-        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 pt-1">
-          <div id="resultsSummary" class="text-sm text-slate-500">
-            در حال نمایش 0 نفر
-          </div>
+        <div>
+          <label for="importProjectFilter" class="block text-xs font-medium text-slate-600 mb-1">
+            پروژه واردات
+          </label>
+          <select id="importProjectFilter" class="w-full rounded-xl border border-slate-300 px-3 py-3 text-sm bg-white outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100">
+            <option value="">همه موارد</option>
+          </select>
+        </div>
 
-          <button
-            id="clearFiltersBtn"
-            type="button"
-            class="px-4 py-2 rounded-lg border border-slate-300 text-sm text-slate-700 hover:bg-slate-50 transition"
-          >
-            پاک کردن فیلترها
-          </button>
+        <div>
+          <label for="exportProjectFilter" class="block text-xs font-medium text-slate-600 mb-1">
+            پروژه صادرات
+          </label>
+          <select id="exportProjectFilter" class="w-full rounded-xl border border-slate-300 px-3 py-3 text-sm bg-white outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100">
+            <option value="">همه موارد</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="emailFilter" class="block text-xs font-medium text-slate-600 mb-1">
+            ایمیل
+          </label>
+          <select id="emailFilter" class="w-full rounded-xl border border-slate-300 px-3 py-3 text-sm bg-white outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100">
+            <option value="">همه</option>
+            <option value="has">دارد</option>
+            <option value="missing">ندارد</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="instagramFilter" class="block text-xs font-medium text-slate-600 mb-1">
+            اینستاگرام
+          </label>
+          <select id="instagramFilter" class="w-full rounded-xl border border-slate-300 px-3 py-3 text-sm bg-white outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100">
+            <option value="">همه</option>
+            <option value="has">دارد</option>
+            <option value="missing">ندارد</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="sortOrder" class="block text-xs font-medium text-slate-600 mb-1">
+            مرتب‌سازی
+          </label>
+          <select id="sortOrder" class="w-full rounded-xl border border-slate-300 px-3 py-3 text-sm bg-white outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100">
+            <option value="updated_desc">آخرین ویرایش</option>
+            <option value="created_desc">جدیدترین</option>
+            <option value="created_asc">قدیمی‌ترین</option>
+            <option value="name_asc">نام الفبایی</option>
+            <option value="name_desc">نام معکوس</option>
+          </select>
         </div>
       </div>
     </section>
 
-    <!-- Table -->
-    <section class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
-      <div class="overflow-x-auto">
-        <table class="w-full min-w-[1100px]">
-          <thead class="bg-slate-50 border-b border-slate-200">
-            <tr class="text-sm text-slate-600">
-              <th class="px-4 py-3 text-right font-semibold">نام</th>
-              <th class="px-4 py-3 text-right font-semibold">استان / شهر</th>
-              <th class="px-4 py-3 text-right font-semibold">راه‌های ارتباطی</th>
-              <th class="px-4 py-3 text-right font-semibold">پروفایل شغلی</th>
-              <th class="px-4 py-3 text-right font-semibold">پروژه‌ها</th>
-              <th class="px-4 py-3 text-right font-semibold">آخرین ویرایش</th>
-              <th class="px-4 py-3 text-right font-semibold">عملیات</th>
-            </tr>
-          </thead>
-          <tbody id="userTableBody" class="divide-y divide-slate-100"></tbody>
-        </table>
+    <!-- Result Meta -->
+    <section class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
+      <div>
+        <div id="resultsSummary" class="text-sm font-medium text-slate-700">
+          در حال دریافت اطلاعات...
+        </div>
+        <div id="activeFilters" class="flex flex-wrap gap-2 mt-2"></div>
       </div>
     </section>
+
+    <!-- Cards -->
+    <section id="cardsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+      <!-- Cards render by JS -->
+    </section>
+
   </main>
 
   <script src="./ui.js"></script>
