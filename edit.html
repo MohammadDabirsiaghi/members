@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>ویرایش شرکت‌کننده</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="bg-slate-50 text-slate-800">
+  <div id="app-navbar"></div>
+
+  <main class="max-w-5xl mx-auto px-4 py-6">
+
+    <!-- Header -->
+    <section class="mb-6">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-bold text-slate-900">
+            ویرایش شرکت‌کننده
+          </h1>
+          <p class="text-sm text-slate-500 mt-2">
+            اطلاعات ثبت‌شده شرکت‌کننده را بررسی و ویرایش کنید.
+          </p>
+        </div>
+
+        <a
+          href="list.html"
+          class="inline-flex items-center justify-center px-5 py-3 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium hover:bg-slate-50 transition"
+        >
+          بازگشت به لیست
+        </a>
+      </div>
+    </section>
+
+    <!-- Loading State -->
+    <section id="editLoadingBox" class="bg-white border border-slate-200 rounded-3xl shadow-sm p-8 text-center">
+      <div class="text-slate-500 text-sm">
+        در حال دریافت اطلاعات شرکت‌کننده...
+      </div>
+    </section>
+
+    <!-- Error State -->
+    <section id="editErrorBox" class="hidden bg-white border border-red-200 rounded-3xl shadow-sm p-8 text-center">
+      <div class="text-red-600 font-medium mb-2">
+        خطا در دریافت اطلاعات
+      </div>
+      <p id="editErrorText" class="text-sm text-slate-500 mb-4">
+        اطلاعات شرکت‌کننده پیدا نشد یا ارتباط با سرویس برقرار نشد.
+      </p>
+      <a
+        href="list.html"
+        class="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition"
+      >
+        بازگشت به لیست
+      </a>
+    </section>
+
+    <!-- Form Card -->
+    <section id="editFormBox" class="hidden bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden">
+      <form id="participantForm" class="p-4 md:p-6 space-y-8">
+
+        <input id="participantId" name="id" type="hidden" />
+
+        <!-- Status Message -->
+        <div id="formMessage" class="hidden rounded-2xl px-4 py-3 text-sm"></div>
+
+        <!-- Meta Info -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+            <div class="text-xs text-slate-400 mb-1">زمان ثبت</div>
+            <div id="createdAtView" class="text-sm font-medium text-slate-700">-</div>
+          </div>
+
+          <div class="rounded-2xl bg-slate-50 border border-slate-100 p-4">
+            <div class="text-xs text-slate-400 mb-1">آخرین ویرایش</div>
+            <div id="updatedAtView" class="text-sm font-medium text-slate-700">-</div>
+          </div>
+        </section>
+
+        <!-- Personal Info -->
+        <section>
+          <div class="mb-4">
+            <h2 class="text-lg font-bold text-slate-900">
+              اطلاعات اصلی
+            </h2>
+            <p class="text-sm text-slate-500 mt-1">
+              اطلاعات هویتی و ارتباطی اولیه شرکت‌کننده
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="name" class="block text-sm font-medium text-slate-700 mb-2">
+                نام و نام خانوادگی
+                <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                placeholder="مثلاً: علی محمدی"
+                class="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition"
+              />
+            </div>
+
+            <div>
+              <label for="mobile" class="block text-sm font-medium text-slate-700 mb-2">
+                شماره موبایل
+                <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="mobile"
+                name="mobile"
+                type="tel"
+                required
+                placeholder="مثلاً: 09123456789"
+                class="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition"
+              />
+            </div>
+
+            <div>
+              <label for="email" class="block text-sm font-medium text-slate-700 mb-2">
+                ایمیل
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="example@email.com"
+                class="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition"
+              />
+            </div>
+
+            <div>
+              <label for="instagram" class="block text-sm font-medium text-slate-700 mb-2">
+                اینستاگرام
+              </label>
+              <input
+                id="instagram"
+                name="instagram"
+                type="text"
+                placeholder="مثلاً: @username یا لینک صفحه"
+                class="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- Location Info -->
+        <section>
+          <div class="mb-4">
+            <h2 class="text-lg font-bold text-slate-900">
+              موقعیت مکانی
+            </h2>
+            <p class="text-sm text-slate-500 mt-1">
+              محل سکونت یا محل اصلی فعالیت شرکت‌کننده
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="province" class="block text-sm font-medium text-slate-700 mb-2">
+                استان
+              </label>
+              <input
+                id="province"
+                name="province"
+                type="text"
+                placeholder="مثلاً: تهران"
+                class="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition"
+              />
+            </div>
+
+            <div>
+              <label for="city" class="block text-sm font-medium text-slate-700 mb-2">
+                شهر
+              </label>
+              <input
+                id="city"
+                name="city"
+                type="text"
+                placeholder="مثلاً: تهران"
+                class="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- Profile Info -->
+        <section>
+          <div class="mb-4">
+            <h2 class="text-lg font-bold text-slate-900">
+              پروفایل تجاری و شغلی
+            </h2>
+            <p class="text-sm text-slate-500 mt-1">
+              اطلاعاتی که برای شناخت بهتر شرکت‌کننده و شبکه‌سازی کاربرد دارد.
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <label for="workProfile" class="block text-sm font-medium text-slate-700 mb-2">
+                وضعیت شغلی / کسب‌وکار
+              </label>
+              <textarea
+                id="workProfile"
+                name="workProfile"
+                rows="5"
+                placeholder="مثلاً: زمینه فعالیت، سمت، تجربه کاری، محصول یا خدمات، بازار هدف..."
+                class="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm leading-7 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition resize-y"
+              ></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="importProject" class="block text-sm font-medium text-slate-700 mb-2">
+                  پروژه واردات
+                </label>
+                <input
+                  id="importProject"
+                  name="importProject"
+                  type="text"
+                  placeholder="مثلاً: واردات تجهیزات پزشکی"
+                  class="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition"
+                />
+              </div>
+
+              <div>
+                <label for="exportProject" class="block text-sm font-medium text-slate-700 mb-2">
+                  پروژه صادرات
+                </label>
+                <input
+                  id="exportProject"
+                  name="exportProject"
+                  type="text"
+                  placeholder="مثلاً: صادرات خشکبار"
+                  class="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label for="needs" class="block text-sm font-medium text-slate-700 mb-2">
+                نیازها
+              </label>
+              <textarea
+                id="needs"
+                name="needs"
+                rows="4"
+                placeholder="مثلاً: نیاز به تامین‌کننده، مشتری خارجی، مشاوره، سرمایه‌گذار، شریک تجاری..."
+                class="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm leading-7 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition resize-y"
+              ></textarea>
+            </div>
+
+            <div>
+              <label for="collaborations" class="block text-sm font-medium text-slate-700 mb-2">
+                همکاری‌های پیشنهادی
+              </label>
+              <textarea
+                id="collaborations"
+                name="collaborations"
+                rows="4"
+                placeholder="مثلاً: امکان تامین کالا، ارتباطات بین‌المللی، تجربه صادرات، شبکه فروش، لجستیک..."
+                class="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm leading-7 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition resize-y"
+              ></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- Extra Info -->
+        <section>
+          <div class="mb-4">
+            <h2 class="text-lg font-bold text-slate-900">
+              اطلاعات تکمیلی
+            </h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="introducedBy" class="block text-sm font-medium text-slate-700 mb-2">
+                معرف
+              </label>
+              <input
+                id="introducedBy"
+                name="introducedBy"
+                type="text"
+                placeholder="نام فرد معرف یا منبع آشنایی"
+                class="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition"
+              />
+            </div>
+
+            <div>
+              <label for="photoUrl" class="block text-sm font-medium text-slate-700 mb-2">
+                لینک عکس
+              </label>
+              <input
+                id="photoUrl"
+                name="photoUrl"
+                type="url"
+                placeholder="https://..."
+                class="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition"
+              />
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <label for="otherContactMethods" class="block text-sm font-medium text-slate-700 mb-2">
+              سایر راه‌های ارتباطی
+            </label>
+            <textarea
+              id="otherContactMethods"
+              name="otherContactMethods"
+              rows="3"
+              placeholder="مثلاً تلگرام، واتساپ، لینکدین، وب‌سایت یا هر راه ارتباطی دیگر..."
+              class="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm leading-7 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition resize-y"
+            ></textarea>
+          </div>
+        </section>
+
+        <!-- Actions -->
+        <section class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-4 border-t border-slate-100">
+          <button
+            id="deleteBtn"
+            type="button"
+            class="inline-flex items-center justify-center px-5 py-3 rounded-xl border border-red-200 bg-red-50 text-red-600 text-sm font-medium hover:bg-red-100 transition"
+          >
+            حذف شرکت‌کننده
+          </button>
+
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a
+              href="list.html"
+              class="inline-flex items-center justify-center px-5 py-3 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium hover:bg-slate-50 transition"
+            >
+              انصراف
+            </a>
+
+            <button
+              id="submitBtn"
+              type="submit"
+              class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              ذخیره تغییرات
+            </button>
+          </div>
+        </section>
+
+      </form>
+    </section>
+  </main>
+
+  <script src="./ui.js"></script>
+  <script src="./assets/js/app.js"></script>
+  <script>
+    mountNavbar('list');
+
+    if (typeof initEditPage === 'function') {
+      initEditPage();
+    }
+  </script>
+</body>
+</html>
